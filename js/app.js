@@ -36,42 +36,91 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // 4. Khởi tạo Swiper cho thư viện ảnh
-  if (document.querySelector('.gallerySwiper')) {
-    new Swiper('.gallerySwiper', {
-      slidesPerView: 3,
-      spaceBetween: 24,
-      slidesPerGroup: 3,
-      loop: true,
-      loopFillGroupWithBlank: true,
-      autoplay: {
-        delay: 4000,
-        disableOnInteraction: false,
-      },
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-      },
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-      breakpoints: {
-        0: {
-          slidesPerView: 1,
-          slidesPerGroup: 1,
-          spaceBetween: 16,
-        },
-        768: {
-          slidesPerView: 2,
-          slidesPerGroup: 2,
-          spaceBetween: 20,
-        },
-        1024: {
-          slidesPerView: 3,
-          slidesPerGroup: 3,
-          spaceBetween: 24,
+  const gallerySwiperEl = document.querySelector('.gallerySwiper');
+  if (gallerySwiperEl) {
+    const slides = Array.from(gallerySwiperEl.querySelectorAll('.swiper-slide'));
+
+    // Hàm kiểm tra sự tồn tại của ảnh hoặc video
+    const checkMedia = (slide) => {
+      return new Promise((resolve) => {
+        const img = slide.querySelector('img');
+        const video = slide.querySelector('video');
+
+        if (img) {
+          // Nếu ảnh đã tải xong (dù thành công hay thất bại)
+          if (img.complete) {
+            resolve(img.naturalWidth > 0);
+            return;
+          }
+          // Lắng nghe sự kiện tải ảnh
+          img.addEventListener('load', () => resolve(true));
+          img.addEventListener('error', () => resolve(false));
+          // Timeout sau 3 giây để tránh chờ đợi lâu
+          setTimeout(() => resolve(false), 3000);
+        } else if (video) {
+          // Lắng nghe sự kiện tải video
+          if (video.readyState >= 1) {
+            resolve(true);
+            return;
+          }
+          video.addEventListener('loadedmetadata', () => resolve(true));
+          video.addEventListener('error', () => resolve(false));
+          // Timeout sau 3 giây
+          setTimeout(() => resolve(false), 3000);
+        } else {
+          // Slide không có ảnh hoặc video
+          resolve(false);
         }
-      }
-    });
+      });
+    };
+
+    // Kiểm tra tất cả slide song song
+    Promise.all(slides.map(slide => checkMedia(slide).then(isValid => ({ slide, isValid }))))
+      .then(results => {
+        let validSlidesCount = 0;
+        results.forEach(({ slide, isValid }) => {
+          if (!isValid) {
+            slide.remove();
+          } else {
+            validSlidesCount++;
+          }
+        });
+
+        // Chỉ khởi tạo Swiper nếu có ít nhất 1 slide hợp lệ
+        if (validSlidesCount > 0) {
+          new Swiper('.gallerySwiper', {
+            slidesPerView: 3,
+            spaceBetween: 24,
+            slidesPerGroup: 1, // Cuộn từng ảnh một để loop chạy mượt mà và liên tục
+            loop: validSlidesCount > 1, // Chỉ bật loop khi có nhiều hơn 1 slide
+            autoplay: {
+              delay: 4000,
+              disableOnInteraction: false,
+            },
+            pagination: {
+              el: '.swiper-pagination',
+              clickable: true,
+            },
+            navigation: {
+              nextEl: '.swiper-button-next',
+              prevEl: '.swiper-button-prev',
+            },
+            breakpoints: {
+              0: {
+                slidesPerView: 1,
+                spaceBetween: 16,
+              },
+              768: {
+                slidesPerView: 2,
+                spaceBetween: 20,
+              },
+              1024: {
+                slidesPerView: 3,
+                spaceBetween: 24,
+              }
+            }
+          });
+        }
+      });
   }
 });

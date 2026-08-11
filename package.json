@@ -16,5 +16,8 @@
     "ninh-binh"
   ],
   "author": "Công ty TNHH MTV Huyền Đức",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^25.5.0"
+  }
 }
