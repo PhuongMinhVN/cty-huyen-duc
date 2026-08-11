@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (gallerySwiperEl) {
     const slides = Array.from(gallerySwiperEl.querySelectorAll('.swiper-slide'));
 
-    // Hàm kiểm tra sự tồn tại của ảnh hoặc video (sử dụng fetch HEAD để lấy kết quả nhanh nhất mà không cần tải toàn bộ file)
+    // Hàm kiểm tra sự tồn tại của ảnh hoặc video
     const checkMedia = (slide) => {
       return new Promise((resolve) => {
         const img = slide.querySelector('img');
@@ -52,22 +52,27 @@ document.addEventListener('DOMContentLoaded', () => {
           return;
         }
 
-        // Dùng fetch HEAD để kiểm tra URL cực nhanh (chỉ tải header)
+        // Tạo timeout chung: Nếu sau 3 giây không kiểm tra xong, mặc định giữ lại slide (resolve true) để tránh xóa nhầm do mạng chậm
+        const fallbackTimer = setTimeout(() => {
+          resolve(true);
+        }, 3000);
+
         fetch(src, { method: 'HEAD' })
           .then(response => {
-            resolve(response.ok); // Trả về true nếu status 200-299, false nếu lỗi 404
+            clearTimeout(fallbackTimer);
+            resolve(response.ok);
           })
           .catch(() => {
-            // Nếu fetch bị lỗi (VD: chặn CORS trên giao thức file://), fallback sang tải tạm
+            // Nếu fetch bị lỗi, dùng Image/Video để thử lại
             if (img) {
               const tempImg = new Image();
-              tempImg.onload = () => resolve(true);
-              tempImg.onerror = () => resolve(false);
+              tempImg.onload = () => { clearTimeout(fallbackTimer); resolve(true); };
+              tempImg.onerror = () => { clearTimeout(fallbackTimer); resolve(false); };
               tempImg.src = src;
             } else if (video) {
               const tempVideo = document.createElement('video');
-              tempVideo.onloadedmetadata = () => resolve(true);
-              tempVideo.onerror = () => resolve(false);
+              tempVideo.onloadedmetadata = () => { clearTimeout(fallbackTimer); resolve(true); };
+              tempVideo.onerror = () => { clearTimeout(fallbackTimer); resolve(false); };
               tempVideo.src = src;
             }
           });
