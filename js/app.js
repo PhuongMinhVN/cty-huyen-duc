@@ -40,29 +40,37 @@ document.addEventListener('DOMContentLoaded', () => {
   if (gallerySwiperEl) {
     const slides = Array.from(gallerySwiperEl.querySelectorAll('.swiper-slide'));
 
-    // Hàm kiểm tra sự tồn tại của ảnh hoặc video (dùng đối tượng tạm thời để tải ngay lập tức, tránh bị ảnh hưởng bởi loading="lazy")
+    // Hàm kiểm tra sự tồn tại của ảnh hoặc video (sử dụng fetch HEAD để lấy kết quả nhanh nhất mà không cần tải toàn bộ file)
     const checkMedia = (slide) => {
       return new Promise((resolve) => {
         const img = slide.querySelector('img');
         const video = slide.querySelector('video');
+        const src = img ? img.src : (video ? video.src : null);
 
-        if (img) {
-          const tempImg = new Image();
-          tempImg.onload = () => resolve(true);
-          tempImg.onerror = () => resolve(false);
-          tempImg.src = img.src;
-          // Timeout sau 5 giây đề phòng mạng chậm
-          setTimeout(() => resolve(false), 5000);
-        } else if (video) {
-          const tempVideo = document.createElement('video');
-          tempVideo.onloadedmetadata = () => resolve(true);
-          tempVideo.onerror = () => resolve(false);
-          tempVideo.src = video.src;
-          // Timeout sau 5 giây
-          setTimeout(() => resolve(false), 5000);
-        } else {
+        if (!src) {
           resolve(false);
+          return;
         }
+
+        // Dùng fetch HEAD để kiểm tra URL cực nhanh (chỉ tải header)
+        fetch(src, { method: 'HEAD' })
+          .then(response => {
+            resolve(response.ok); // Trả về true nếu status 200-299, false nếu lỗi 404
+          })
+          .catch(() => {
+            // Nếu fetch bị lỗi (VD: chặn CORS trên giao thức file://), fallback sang tải tạm
+            if (img) {
+              const tempImg = new Image();
+              tempImg.onload = () => resolve(true);
+              tempImg.onerror = () => resolve(false);
+              tempImg.src = src;
+            } else if (video) {
+              const tempVideo = document.createElement('video');
+              tempVideo.onloadedmetadata = () => resolve(true);
+              tempVideo.onerror = () => resolve(false);
+              tempVideo.src = src;
+            }
+          });
       });
     };
 
