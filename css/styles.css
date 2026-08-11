@@ -1,0 +1,490 @@
+/* ==========================================================================
+   PREMIUM INDUSTRIAL DESIGN
+   Giao diện chuẩn doanh nghiệp: Sang trọng, Đẳng cấp, Hiện đại
+   ========================================================================== */
+
+:root {
+  --primary: #0f172a;       /* Xanh Navy đậm - Sang trọng, tin cậy */
+  --accent: #f59e0b;        /* Vàng Gold - Điểm nhấn cao cấp */
+  --accent-hover: #d97706;
+  --text-main: #334155;     /* Xám than - Dễ đọc */
+  --text-light: #64748b;
+  --bg-light: #f8fafc;
+  --white: #ffffff;
+  --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+  --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--text-main);
+  background-color: var(--bg-light);
+  line-height: 1.7;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
+.header {
+  background: var(--white);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  height: 90px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo img {
+  height: 60px;
+}
+
+.btn-call {
+  background: var(--primary);
+  color: var(--accent);
+  padding: 0.7rem 1.8rem;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  border: 1px solid var(--primary);
+  white-space: nowrap;
+}
+
+.btn-call:hover {
+  background: var(--white);
+  color: var(--primary);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+}
+
+/* ==========================================================================
+   HERO SECTION
+   ========================================================================== */
+.hero {
+  background: linear-gradient(135deg, var(--primary) 0%, #1e293b 100%);
+  color: var(--white);
+  padding: 7rem 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Thêm hoạ tiết nền nhẹ cho Hero */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 30px 30px;
+  opacity: 0.5;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  letter-spacing: -1px;
+  line-height: 1.2;
+}
+
+.hero-title span {
+  color: var(--accent);
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: #cbd5e1;
+  margin-bottom: 2.5rem;
+}
+
+/* ==========================================================================
+   SERVICES (LĨNH VỰC HOẠT ĐỘNG)
+   ========================================================================== */
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin: 5rem 0 1rem;
+  letter-spacing: -0.5px;
+}
+
+.section-subtitle {
+  text-align: center;
+  color: var(--text-light);
+  font-size: 1.15rem;
+  margin-bottom: 4rem;
+}
+
+.services {
+  max-width: 1200px;
+  margin: 0 auto 5rem;
+  padding: 0 20px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+}
+
+.card {
+  background: var(--white);
+  padding: 3rem 2.5rem;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-top: 4px solid transparent;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-hover);
+  border-top: 4px solid var(--accent);
+}
+
+.card-icon {
+  margin-bottom: 1.5rem;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  background: #f1f5f9;
+  color: var(--primary);
+}
+
+.card-icon svg {
+  width: 36px;
+  height: 36px;
+  fill: currentColor;
+}
+
+.card h3 {
+  font-size: 1.5rem;
+  color: var(--primary);
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.card p {
+  color: var(--text-light);
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+}
+
+.card-list {
+  list-style: none;
+  margin-bottom: 2.5rem;
+  flex-grow: 1;
+}
+
+.card-list li {
+  position: relative;
+  padding-left: 1.8rem;
+  margin-bottom: 1rem;
+  color: var(--text-main);
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.card-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+.btn-card {
+  display: block;
+  text-align: center;
+  background: #f1f5f9;
+  color: var(--primary);
+  text-decoration: none;
+  padding: 1rem;
+  border-radius: 8px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.btn-card:hover {
+  background: var(--primary);
+  color: var(--accent);
+  border-color: var(--primary);
+}
+
+/* ==========================================================================
+   GALLERY SECTION (HÌNH ẢNH HOẠT ĐỘNG)
+   ========================================================================== */
+.gallery {
+  max-width: 1200px;
+  margin: 0 auto 5rem;
+  padding: 0 20px;
+}
+
+.swiper {
+  width: 100%;
+  padding-bottom: 3rem !important; /* Make room for pagination */
+}
+
+.gallery-item {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  aspect-ratio: 4/3;
+  position: relative;
+  background: var(--primary);
+  /* Ensure Swiper slide behaves correctly */
+  height: auto;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+  opacity: 0.9;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.08);
+  opacity: 1;
+}
+
+/* Customizing Swiper Navigation and Pagination */
+.swiper-button-next,
+.swiper-button-prev {
+  color: var(--accent) !important;
+  background: var(--white);
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  top: 40% !important;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  font-size: 1.2rem !important;
+  font-weight: bold;
+}
+
+.swiper-pagination-bullet {
+  background: var(--primary) !important;
+  opacity: 0.5 !important;
+}
+
+.swiper-pagination-bullet-active {
+  background: var(--accent) !important;
+  opacity: 1 !important;
+  transform: scale(1.2);
+}
+
+/* ==========================================================================
+   LOCATION & CONTACT SECTION (TRỤ SỞ & BẢN ĐỒ)
+   ========================================================================== */
+.contact-section {
+  max-width: 1200px;
+  margin: 0 auto 5rem;
+  padding: 0 20px;
+}
+
+.location-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--white);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.location-info {
+  padding: 4rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.location-info h3 {
+  font-size: 2rem;
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+
+.location-info p {
+  color: var(--text-light);
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+.contact-details p {
+  margin-bottom: 1rem;
+  font-size: 1.05rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+}
+
+.map-container {
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+}
+
+.map-container iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+  background: var(--primary);
+  color: var(--white);
+  text-align: center;
+  padding: 2.5rem 20px;
+  font-size: 0.95rem;
+}
+
+.footer p {
+  opacity: 0.8;
+}
+
+/* ==========================================================================
+   FLOATING BUTTON (Zalo/Call)
+   ========================================================================== */
+.floating-btn {
+  position: fixed;
+  bottom: 2.5rem;
+  right: 2.5rem;
+  background: #3b82f6; /* Xanh bản đồ */
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.1rem;
+  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.floating-btn:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 15px 30px rgba(59, 130, 246, 0.5);
+  color: white;
+}
+
+/* ==========================================================================
+   RESPONSIVE (MOBILE & TABLET)
+   ========================================================================== */
+@media (max-width: 992px) {
+  .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .location-card {
+    grid-template-columns: 1fr;
+  }
+  .map-container {
+    min-height: 350px;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-bottom: 90px;
+  }
+  .header-content {
+    height: 75px;
+  }
+  .logo img {
+    height: 45px;
+  }
+  .btn-call {
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+  }
+  .hero {
+    padding: 5rem 20px;
+  }
+  .hero-title {
+    font-size: 2.2rem;
+  }
+  .grid-3 {
+    grid-template-columns: 1fr;
+  }
+  .section-title {
+    font-size: 2rem;
+    margin-top: 3rem;
+  }
+  .card {
+    padding: 2rem 1.5rem;
+  }
+  .floating-btn {
+    bottom: 1.5rem;
+    right: 1.5rem;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-content {
+    padding: 0 10px;
+    height: 65px;
+  }
+  .logo img {
+    height: 32px;
+  }
+  .btn-call {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.85rem;
+    gap: 4px;
+  }
+  .btn-call svg, .btn-call i, .btn-call span {
+    display: none; /* Nếu có icon bên trong, có thể ẩn đi cho gọn */
+  }
+  .hero-title {
+    font-size: 1.8rem;
+  }
+}

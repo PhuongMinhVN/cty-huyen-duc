@@ -1,0 +1,20 @@
+{
+  "name": "cty-huyen-duc-website",
+  "version": "1.0.0",
+  "description": "Website giới thiệu Công ty TNHH MTV Huyền Đức - Khí Ô-xi, Hóa chất & Cơ khí tại KCN Trung Sơn, Tam Điệp",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "huyen-duc",
+    "khi-oxy",
+    "hoa-chat",
+    "co-khi",
+    "tam-diep",
+    "ninh-binh"
+  ],
+  "author": "Công ty TNHH MTV Huyền Đức",
+  "license": "ISC"
+}

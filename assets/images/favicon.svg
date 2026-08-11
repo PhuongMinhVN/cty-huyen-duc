@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="favBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0E4A96" />
+      <stop offset="100%" stop-color="#00B4D8" />
+    </linearGradient>
+    <linearGradient id="favGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#D97706" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#0A3B7B" />
+  <polygon points="32,8 54,20 54,44 32,56 10,44 10,20" fill="none" stroke="#00B4D8" stroke-width="2.5" />
+  <!-- Monogram HD -->
+  <path d="M 20,20 L 26,20 L 26,44 L 20,44 Z" fill="#FFFFFF" />
+  <path d="M 26,30 L 37,30 L 37,35 L 26,35 Z" fill="#FFFFFF" />
+  <path d="M 34,20 L 41,20 C 49,20 52,26 52,32 C 52,38 49,44 41,44 L 34,44 Z M 39,25 L 39,39 C 43,39 46,37 46,32 C 46,27 43,25 39,25 Z" fill="#FFFFFF" />
+  <circle cx="32" cy="32" r="3.5" fill="url(#favGold)" />
+</svg>
