@@ -40,35 +40,27 @@ document.addEventListener('DOMContentLoaded', () => {
   if (gallerySwiperEl) {
     const slides = Array.from(gallerySwiperEl.querySelectorAll('.swiper-slide'));
 
-    // Hàm kiểm tra sự tồn tại của ảnh hoặc video
+    // Hàm kiểm tra sự tồn tại của ảnh hoặc video (dùng đối tượng tạm thời để tải ngay lập tức, tránh bị ảnh hưởng bởi loading="lazy")
     const checkMedia = (slide) => {
       return new Promise((resolve) => {
         const img = slide.querySelector('img');
         const video = slide.querySelector('video');
 
         if (img) {
-          // Nếu ảnh đã tải xong (dù thành công hay thất bại)
-          if (img.complete) {
-            resolve(img.naturalWidth > 0);
-            return;
-          }
-          // Lắng nghe sự kiện tải ảnh
-          img.addEventListener('load', () => resolve(true));
-          img.addEventListener('error', () => resolve(false));
-          // Timeout sau 3 giây để tránh chờ đợi lâu
-          setTimeout(() => resolve(false), 3000);
+          const tempImg = new Image();
+          tempImg.onload = () => resolve(true);
+          tempImg.onerror = () => resolve(false);
+          tempImg.src = img.src;
+          // Timeout sau 5 giây đề phòng mạng chậm
+          setTimeout(() => resolve(false), 5000);
         } else if (video) {
-          // Lắng nghe sự kiện tải video
-          if (video.readyState >= 1) {
-            resolve(true);
-            return;
-          }
-          video.addEventListener('loadedmetadata', () => resolve(true));
-          video.addEventListener('error', () => resolve(false));
-          // Timeout sau 3 giây
-          setTimeout(() => resolve(false), 3000);
+          const tempVideo = document.createElement('video');
+          tempVideo.onloadedmetadata = () => resolve(true);
+          tempVideo.onerror = () => resolve(false);
+          tempVideo.src = video.src;
+          // Timeout sau 5 giây
+          setTimeout(() => resolve(false), 5000);
         } else {
-          // Slide không có ảnh hoặc video
           resolve(false);
         }
       });
